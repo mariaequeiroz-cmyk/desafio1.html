@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio 2 - Semáforo</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const semaforo = document.createElement("div");
+    Object.assign(semaforo.style, {
+      width: "120px",
+      height: "60vh",
+      backgroundColor: "black",
+      borderRadius: "20px",
+      display: "flex",
+      flexDirection: "column",
+      justify-content: "space-around",
+      alignItems: "center",
+      padding: "15px 0",
+      boxSizing: "border-box"
+    });
+    document.body.appendChild(semaforo);
+
+    function criarLuz(callbackEstilo) {
+      const luz = document.createElement("div");
+      Object.assign(luz.style, {
+        width: "80px",
+        height: "80px",
+        borderRadius: "50%",
+        opacity: "0.2",
+        transition: "opacity 0.3s"
+      });
+      callbackEstilo(luz);
+      semaforo.appendChild(luz);
+      return luz;
+    }
+
+    const luzVermelha = criarLuz((el) => { el.style.backgroundColor = "red"; });
+    const luzAmarela = criarLuz((el) => { el.style.backgroundColor = "yellow"; });
+    const luzVerde = criarLuz((el) => { el.style.backgroundColor = "green"; });
+
+    const luzes = [luzVermelha, luzAmarela, luzVerde];
+    let indiceAtual = 0;
+
+    function alternarSemaforo() {
+      luzes.forEach(luz => luz.style.opacity = "0.2");
+      luzes[indiceAtual].style.opacity = "1";
+      indiceAtual = (indiceAtual + 1) % luzes.length;
+    }
+
+    alternarSemaforo();
+    setInterval(alternarSemaforo, 2000);
+  </script>
+</body>
+</html>
